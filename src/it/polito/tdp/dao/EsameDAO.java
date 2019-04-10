@@ -11,6 +11,8 @@ import it.polito.tdp.model.Esame;
 
 public class EsameDAO {
 
+	
+	
 	public List<Esame> getTuttiEsami() {
 
 		final String sql = "SELECT * FROM esami";
@@ -36,6 +38,9 @@ public class EsameDAO {
 			throw new RuntimeException("Errore DB", e);
 		}
 	}
+	
+	
+	
 	
 	/*
 	 * Data una matricola ed il codice insegnamento, iscrivi lo studente al corso.

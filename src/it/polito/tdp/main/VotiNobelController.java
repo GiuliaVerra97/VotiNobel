@@ -31,24 +31,37 @@ public class VotiNobelController {
     @FXML
     private Button btnReset;
 
+    
+    
+    
     @FXML
     void doCalcolaCombinazione(ActionEvent event) {
-    		try {
+    	txtResult.clear();	
+    	try {
     			int numeroCrediti = Integer.parseInt(txtInput.getText());
     			List<Esame> voti = model.calcolaSottoinsiemeEsami(numeroCrediti);
+    			if(voti!=null) {
+        			txtResult.appendText(voti.toString());
+    			}else {
+    				txtResult.appendText("Non c'è nessuna combinazione di esami che mi permetta di arrivare ad ottenere il numero di crediti desiderato");
+    			}
     			
     		} catch (NumberFormatException e) {
     			txtResult.setText("Inserire un numero di crediti > 0");
     		}
     }
 
+    
+    
+    
     @FXML
     void doReset(ActionEvent event) {
-    		// reset the UI
     		txtInput.clear();
     		txtResult.clear();
     }
 
+    
+    
     @FXML
     void initialize() {
         assert txtInput != null : "fx:id=\"txtInput\" was not injected: check your FXML file 'VotiNobel.fxml'.";
@@ -56,8 +69,13 @@ public class VotiNobelController {
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'VotiNobel.fxml'.";
     }
 
+    
+    
+    
 	public void setModel(Model model) {
-		
 		this.model = model;
 	}
+	
+	
+	
 }

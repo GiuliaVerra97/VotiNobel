@@ -1,0 +1,69 @@
+Input: set Esami
+input: numero di crediti "m"
+
+output: set di esami, sottoinsieme di quello di partenza, per cui:
+	-somma Esame.crediti==m
+	-media Esame.voto MAX
+	
+Segreteria: generare tutti i possibili sotto insiemi dell'insieme di partenza
+
+
+
+
+
+
+
+#Approccio 1: genera l'insieme degli esami decidendo, corso per corso, se fanno farte dell'insieme
+
+Livello L della ricorsione -> quale corso sto decidendo di includere o meno nell'insieme soluzione. L indica il corso L presente nel db
+
+Soluzione parziale -> un sottoinsieme composto dai corsi tra 0 e L-1
+Esempioi: L=4, quando si analizza il quinto corso presente nel db e si sceglie se inserirlo nella soluzione parziale o no
+	 soluzione paziale: {0, 3}			prima sono stati inseriti solo gli esami 0 e 3 nella soluzione parzziale
+	 soluzione parziale: {0, 1, 2, 3}	prima sono stati inseriti esami 0,1,2,3 nella soluzione parziale
+	 soluzione parziale: {}				prima del quinto esame non sono stati inseriti esami nella soluzione parziale
+	 
+Generazione del sotto-problema: decidere se inserire Esame[] oppure no. Bisogna richiamare la funzione ricorsiva 2 volte.
+	1.sotto-problema=soluzione parziale (non aggiunto)
+	2.sotto-problema= soluzione parziale + {1}
+	
+	
+Casi terminali:
+- L=max-> non ci sono più corsi
+	-somma crediti==m -> calcolo la media
+	-somma crediti !=m-> niente	
+-somma crediti==m
+	-valuta la media
+	-non genera sotto-problemi	
+-somma crediti>m
+	-esce, non genera sotto-problemi
+	
+Cosa faccio nel caso terminale?
+-se la somma crediti!=m-> return
+-se somma crediti==m, valuta media
+	-la media è migliore della miglior media conosciuta?
+		si: soluzione corrente diventa il 'best'
+		no:niente
+
+Complessità: 2^N dove n sono gli aesami 
+	
+	
+	
+	
+	
+#approccio 2: ad ogni livello, aggiungo un corso. Devo decidere quale.
+
+Soluzione parziale al livello L: un insieme di L corsi. L indica il numero di corsi presente nella soluzione parziale.
+
+ESEMPIO: se L=3, ci sono 3 corsi nella soluzione, se L=4 ci sono 4 corsi nella soluzione.
+
+Generazione del sotto-problema: aggiungere un nuovo corso all'insieme esistente.
+Per tutti i corsi(i) possibili (non ancora nell'insieme).Bisogna richiamare la funzione ricorsiva 1 volta sola.
+	-sotto problema=parziale +corso(i)
+casi terminali: vedi sopra
+
+Complessità: N!
+
+
+ACCORTTEZZA: permettere solo sequenze crescenti di esami nella soluzione parziale
+Complessità: 2^N
